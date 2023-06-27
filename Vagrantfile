@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/centos8"
-  config.vm.network "forwarded_port", guest: 22, host: 2200  # Forward SSH port
+  #config.vm.network "forwarded_port", guest: 22, host: 2200  # Forward SSH port
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"  # Adjust the memory as needed

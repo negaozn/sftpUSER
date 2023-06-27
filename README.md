@@ -1,2 +1,1 @@
-# sftpUSER
-Create an sftpUser automatic on a centos
+# Create sftp user
