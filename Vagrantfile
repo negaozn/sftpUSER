@@ -8,15 +8,16 @@ Vagrant.configure("2") do |config|
 
   # Provision the server and configure SFTP
   config.vm.provision "shell", inline: <<-SHELL
-    dnf -y update
-    dnf -y install openssh-server
+  dnf -y update
+  dnf -y install openssh-server
 
-    # Edit SSH configuration to enable SFTP
-    sed -i 's/#Subsystem/Subsystem/' /etc/ssh/sshd_config
-    echo "Match user vagrant\n  ForceCommand internal-sftp\n  PasswordAuthentication yes" >> /etc/ssh/sshd_config
+  # Edit SSH configuration to enable SFTP and password authentication for Vagrant
+  sed -i 's/#Subsystem/Subsystem/' /etc/ssh/sshd_config
+  echo "Match user vagrant\n  ForceCommand internal-sftp\n  PasswordAuthentication yes" >> /etc/ssh/sshd_config
+  echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
-    # Restart SSH service
-    # service ssh restart
+  # Restart SSH service
+  systemctl restart sshd
   SHELL
   config.vm.provision "shell", privileged: true, path: "./script/createuser.sh"
 end

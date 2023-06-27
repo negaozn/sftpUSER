@@ -1,11 +1,15 @@
 #!/bin/bash
 
 # Prompt for user input
-read -p "Enter username: " USERNAME
-read -s -p "Enter password: " PASSWORD
+
+#read -p "Enter username: " USERNAME
+#read -s -p "Enter password: " PASSWORD
 echo
 
+
 # Variables
+USERNAME="teste"
+PASSWORD="teste"
 HOMEDIR="/incoming/$USERNAME"
 GROUP="sftpusers"
 DIR="/sftpusers/$USERNAME"
@@ -29,48 +33,43 @@ fi
 sudo useradd -d $HOMEDIR -s /bin/bash $USERNAME
 echo "$USERNAME:$PASSWORD" | sudo chpasswd
 
-su - $USERNAME << EOF
-ssh-keygen -t rsa -b 4096
-EOF
-
-su - $USERNAME << EOF
-openssl rand -base64 16
-EOF
+sudo -u $USERNAME ssh-keygen -t rsa -b 4096
+sudo -u $USERNAME openssl rand -base64 16
 
 sudo mv $HOMEDIR /sftpusers/
 
 sudo usermod -G $GROUP -d /incoming -s /sbin/nologin $USERNAME
 
-sudo groupdel $USERNAME
+# sudo groupdel $USERNAME
 
-cd /$GROUP
+# cd /$GROUP
 
-chmod 755 /$USERNAME
+# chmod 755 /$USERNAME
 
-cd /$USERNAME
+# cd /$USERNAME
 
-chown $USERNAME:sftpusers .bash_history .bash_logout .bash_history .cache .bashrc .config .rnc
+# chown $USERNAME:sftpusers .bash_history .bash_logout .bash_history .cache .bashrc .config .rnc
 
-chown $USERNAME:root .ssh
+# chown $USERNAME:root .ssh
 
-chmod 700 .ssh 
+# chmod 700 .ssh 
 
-cd .ssh/
+# cd .ssh/
 
-chown $USERNAME:root id_rsa id_rsa.pub
+# chown $USERNAME:root id_rsa id_rsa.pub
 
-touch autorized_keys
+# touch autorized_keys
 
-chown $USERNAME:sftpusers autorized_keys
+# chown $USERNAME:sftpusers autorized_keys
 
-chmod 600 autorized_keys
+# chmod 600 autorized_keys
 
-cd ..
+# cd ..
 
-mkdir /$DIR/incoming/
+# mkdir /$DIR/incoming/
 
-chown $USERNAME:sftpusers incoming/
+# chown $USERNAME:sftpusers incoming/
 
-chmod 750 incoming/
+# chmod 750 incoming/
 
-echo "User $USERNAME has been created."
+# echo "User $USERNAME has been created."
