@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/centos8"
-  config.vm.network "forwarded_port", guest: 22, host: 2222  # Forward SSH port
+  config.vm.network "forwarded_port", guest: 22, host: 2200  # Forward SSH port
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"  # Adjust the memory as needed
@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
     echo "Match user vagrant\n  ForceCommand internal-sftp\n  PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
     # Restart SSH service
-    service ssh restart
+    # service ssh restart
   SHELL
+  config.vm.provision "shell", privileged: true, path: "./script/createuser.sh"
 end
