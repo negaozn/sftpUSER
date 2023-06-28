@@ -29,16 +29,27 @@ else
     echo "sftpusers ja existe"
 fi
 
+groupadd sftpusers
+chown root:$GROUP /sftpusers
+chmod 777 /sftpusers
+
+
 # Create user
-sudo useradd -d $HOMEDIR -s /bin/bash $USERNAME
-echo "$USERNAME:$PASSWORD" | sudo chpasswd
+useradd -d $HOMEDIR -s /bin/bash $USERNAME
+# mkdir $HOMEDIR
+echo "$USERNAME:$PASSWORD" | chpasswd
 
-sudo -u $USERNAME ssh-keygen -t rsa -b 4096
-sudo -u $USERNAME openssl rand -base64 16
+# sudo -u $USERNAME ssh-keygen -t rsa -b 4096
+# sudo -u $USERNAME openssl rand -base64 16
 
-sudo mv $HOMEDIR /sftpusers/
+echo -e "\n" | sudo -u $USERNAME ssh-keygen -t rsa -b 4096
+#echo "$password" | sudo -u $USERNAME openssl rand -base64 16
 
-sudo usermod -G $GROUP -d /incoming -s /sbin/nologin $USERNAME
+# mv $HOMEDIR /sftpusers/
+
+sudo usermod -G $GROUP -d $HOMEDIR -s /bin/bash $USERNAME
+
+ 
 
 # sudo groupdel $USERNAME
 
