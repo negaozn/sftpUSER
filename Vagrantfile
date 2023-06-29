@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 
   # Edit SSH configuration to enable SFTP and password authentication for Vagrant
   sed -i 's/#Subsystem/Subsystem/' /etc/ssh/sshd_config
-  echo "Match user vagrant\n  ForceCommand internal-sftp\n  PasswordAuthentication yes" >> /etc/ssh/sshd_config
+  echo "ForceCommand internal-sftp\n  PasswordAuthentication yes" >> /etc/ssh/sshd_config
   echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
   # Restart SSH service

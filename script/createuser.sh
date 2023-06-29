@@ -8,8 +8,8 @@ echo
 
 
 # Variables
-USERNAME="teste"
-PASSWORD="teste"
+USERNAME="teste2"
+PASSWORD="teste2"
 HOMEDIR="/incoming/$USERNAME"
 GROUP="sftpusers"
 DIR="/sftpusers/$USERNAME"
@@ -43,11 +43,11 @@ echo "$USERNAME:$PASSWORD" | chpasswd
 # sudo -u $USERNAME openssl rand -base64 16
 
 echo -e "\n" | sudo -u $USERNAME ssh-keygen -t rsa -b 4096
-#echo "$password" | sudo -u $USERNAME openssl rand -base64 16
+echo "$password" | sudo -u $USERNAME openssl rand -base64 16
 
-# mv $HOMEDIR /sftpusers/
+mv $HOMEDIR /sftpusers/
 
-sudo usermod -G $GROUP -d $HOMEDIR -s /bin/bash $USERNAME
+sudo usermod -G $GROUP -d $DIR -s /bin/nologin $USERNAME
 
  
 
