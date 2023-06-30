@@ -29,7 +29,7 @@ else
     echo "sftpusers ja existe"
 fi
 
-groupadd sftpusers
+# groupadd sftpusers
 chown root:$GROUP /sftpusers
 chmod 777 /sftpusers
 
